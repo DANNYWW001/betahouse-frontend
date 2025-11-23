@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../assets/beta.png";
 import { IoMdMenu, IoMdClose } from "react-icons/io";
 import { FaChevronDown } from "react-icons/fa";
-import { useAppContext } from "../hooks/useAppContext";
+import { useAppContext } from "../Hooks/useAppContext";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);

@@ -6,7 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { FcGoogle } from "react-icons/fc";
 import axiosInstance from "../api/Axios";
-import { useAppContext } from "../hooks/useAppContext";
+import { useAppContext } from "../Hooks/useAppContext";
 
 const loginSchema = Yup.object().shape({
   email: Yup.string()

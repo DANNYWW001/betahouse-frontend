@@ -1,0 +1,15 @@
+
+@import "tailwindcss";
+@plugin "daisyui";
+
+.layout {
+  @apply max-w-[1400px] px-2 mx-auto w-full;
+}
+
+.alroe {
+  @apply text-[#181A20D1] text-[16px] font-medium block mb-2;
+}
+
+.int {
+  @apply w-full px-[12px] py-[15px] h-[50px] border-[2.5px] mb-4 border-[#DEDFE0] rounded-[5px] outline-none text-[16px] placeholder:text-[#2632388F];
+}

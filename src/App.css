@@ -1,0 +1,9 @@
+.hero {
+  position: relative;
+  background-image: url("./assets/hero.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color:#666666;
+   /* To ensure text is readable */
+}

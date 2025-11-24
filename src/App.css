@@ -7,3 +7,13 @@
   color:#666666;
    /* To ensure text is readable */
 }
+
+
+.outfit {
+  font-family: "Outfit", sans-serif;
+}
+
+.outfit-bold {
+  font-family: "Outfit", sans-serif;
+  font-weight: 600;
+}

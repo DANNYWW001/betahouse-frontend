@@ -111,7 +111,7 @@ const PropertyList = ({ properties }) => {
             </div>
 
             <div className="p-4 space-y-2">
-              <h3 className="font-semibold text-lg">{property.title}</h3>
+              <h3 className="outfit outfit-bold  text-[20.68px] text-[#444444]">{property.title}</h3>
 
               <p className="text-sm text-gray-500 flex items-center gap-1">
                 <FaMapMarkerAlt className="text-black" />
@@ -130,7 +130,7 @@ const PropertyList = ({ properties }) => {
               </div>
 
               <div className="flex justify-between items-center border-t pt-3 mt-3 border-gray-300">
-                <p className="text-black-600 font-bold">
+                <p className=" outfit outfit-bold text-[22px] text-[#444444]">
                   {formatPrice(property.price, property.priceValue)}
                 </p>
 

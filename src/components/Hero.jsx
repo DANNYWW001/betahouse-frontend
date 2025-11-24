@@ -32,69 +32,57 @@ const Hero = ({ setProperties, setPagination }) => {
     window.scrollTo({ top, behavior: "smooth" });
   };
 
-  const handleSearch = async (e) => {
-    e.preventDefault();
-    setError("");
-    setIsLoading(true);
+ const handleSearch = async (e) => {
+   e.preventDefault();
+   setError("");
+   setIsLoading(true);
 
-    try {
-      const res = await axiosInstance.get("/properties", {
-        params: {
-          page: 1,
-          limit: 200, 
-        },
-      });
+   try {
+     // Get values from state
+     const loc = (location || "").trim(); // e.g. "Lagos"
+     const type = (propertyType || "").trim(); // e.g. "apartment"
+     const beds = bedrooms === "" ? "" : Number(bedrooms); // e.g. "3" -> 3
 
-      const allProps = res.data?.data || [];
+     // Build query params for backend
+     const params = {
+       page: 1,
+       limit: 9, // or whatever you want per page
+     };
 
-      const loc = location.trim().toLowerCase();
-      const type = propertyType.trim().toLowerCase();
-      const beds = bedrooms === "" ? "" : Number(bedrooms);
+     if (loc) params.location = loc;
+     if (type) params.type = type;
+     if (beds !== "" && !Number.isNaN(beds)) {
+       params.bedrooms = beds; // matches backend `bedrooms`
+     }
 
-      const filtered = allProps.filter((p) => {
-        const combinedLocation = `${p.location} ${p.city || ""} ${
-          p.state || ""
-        }`
-          .toLowerCase()
-          .trim();
+     const res = await axiosInstance.get("/properties", { params });
 
-        const pType = (p.type || "").toLowerCase();
-        const pBed = Number(p.bedrooms);
+     const { data = [], pagination } = res.data || {};
 
-        const matchLocation = !loc || combinedLocation.includes(loc);
-        const matchType = !type || pType.includes(type);
-        const matchBedrooms = beds === "" || pBed === beds; 
+     // Update state with API result
+     if (setProperties) setProperties(data);
 
-        return matchLocation && matchType && matchBedrooms;
-      });
+     if (setPagination && pagination) {
+       setPagination({
+         page: pagination.page,
+         totalPages: pagination.totalPages,
+         total: pagination.total,
+         limit: pagination.limit,
+       });
+     }
 
-      if (setProperties) setProperties(filtered);
-
-      if (setPagination) {
-        const total = filtered.length;
-        const limit = 9;
-        const totalPages = Math.max(1, Math.ceil(total / limit));
-
-        setPagination({
-          page: 1,
-          totalPages,
-          total,
-          limit,
-        });
-      }
-
-      if (filtered.length === 0) {
-        setError("No properties match your search. Try different filters.");
-      }
-
-      scrollToProperties();
-    } catch (err) {
-      console.error("Hero search error:", err);
-      setError("Unable to fetch properties. Try again.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
+     if (!data.length) {
+       setError("No properties match your search. Try different filters.");
+     } else {
+       scrollToProperties();
+     }
+   } catch (err) {
+     console.error("Hero search error:", err);
+     setError("Unable to fetch properties. Try again.");
+   } finally {
+     setIsLoading(false);
+   }
+ };
 
   return (
     <div className="layout px-4">
